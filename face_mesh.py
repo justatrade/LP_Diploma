@@ -11,7 +11,7 @@ def face_find(face=True):
     face_mesh = mp_face_mesh.FaceMesh(static_image_mode=True, min_detection_confidence=0.75)
 
     """ Картинка с которой работаем """
-    img = cv2.imread(get_file_by_user())
+    img = cv2.imread(get_file_by_user(1, "term.jpeg"))
     height, width, _ = img.shape
     rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 

@@ -1,5 +1,5 @@
 import telebot
-from filesfiles.save_get_file import save_file
+from files.save_get_file import save_file
 
 
 def all_handlers(bot: telebot.TeleBot):
