@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 
 
-def face_find():
+def face_find(face=True):
     """ Параметры отрисовки маски """
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing_styles = mp.solutions.drawing_styles
@@ -16,7 +16,6 @@ def face_find():
 
     """ Накладывание точек на лицо """
     result = face_mesh.process(rgb_img)
-    face = True
     if face:
         for facial_landmarks in result.multi_face_landmarks:
             for i in range(468):
