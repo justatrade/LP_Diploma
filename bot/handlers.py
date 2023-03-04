@@ -1,5 +1,6 @@
 import telebot
-from files.save_get_file import save_file
+from filesfiles.save_get_file import save_file
+
 
 def all_handlers(bot: telebot.TeleBot):
     """
@@ -7,6 +8,7 @@ def all_handlers(bot: telebot.TeleBot):
     :param bot:
     :return:
     """
+
     @bot.message_handler(commands=['start', 'help'])
     def greeting(msg):
         """
@@ -46,4 +48,3 @@ def all_handlers(bot: telebot.TeleBot):
             print(e)
             bot.send_message(msg.chat.id, "Photo downloading failed. "
                                           "Please, try again")
-
