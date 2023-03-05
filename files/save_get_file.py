@@ -25,7 +25,7 @@ def check_format(file_id) -> bool:
     :return: True, если расширение допустимо. False во всех остальных случаях
     """
     extension = os.path.splitext(file_id)[-1][1::]
-    return True if extension in config.ACCEPTABLE_FORMATS else False
+    return extension in config.ACCEPTABLE_FORMATS
 
 
 def save_file(user_id: int, file_id: str, file) -> bool:
