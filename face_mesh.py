@@ -19,7 +19,12 @@ def face_find(face=True):
     result = face_mesh.process(rgb_img)
     if face:
         for facial_landmarks in result.multi_face_landmarks:
-            """ facial_landmarks - содержит массив с координатами отметок на лице """
+            """ 
+            facial_landmarks - содержит массив с координатами отметок на лице 
+            Координаты X и Y являются нормализованными экранными координатами, 
+            а координата Z является относительной и масштабируется как координата X 
+            в модели проекционной камеры со слабой перспективой.
+            """
             for i in range(468):
                 pt1 = facial_landmarks.landmark[i]
                 x = int(pt1.x * width)
