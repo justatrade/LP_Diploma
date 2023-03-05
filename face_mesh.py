@@ -19,6 +19,7 @@ def face_find(face=True):
     result = face_mesh.process(rgb_img)
     if face:
         for facial_landmarks in result.multi_face_landmarks:
+            """ facial_landmarks - содержит массив с координатами отметок на лице """
             for i in range(468):
                 pt1 = facial_landmarks.landmark[i]
                 x = int(pt1.x * width)
@@ -32,12 +33,9 @@ def face_find(face=True):
                     landmark_drawing_spec=None,
                     connection_drawing_spec=mp_drawing_styles
                     .get_default_face_mesh_tesselation_style())
-    else:
-        return f"Лицо не найдено"
-
-    """ Результат """
-    cv2.imshow("Res", img)
-    cv2.waitKey(0)
+        """ Результат """
+        cv2.imshow("Res", img)
+        cv2.waitKey(0)
 
 
 if __name__ == "__main__":
