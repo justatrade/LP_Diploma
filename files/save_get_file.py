@@ -25,10 +25,7 @@ def check_format(file_id) -> bool:
     :return: True, если расширение допустимо. False во всех остальных случаях
     """
     extension = os.path.splitext(file_id)[-1][1::]
-    if extension in config.ACCEPTABLE_FORMATS:
-        return True
-    else:
-        return False
+    return extension in config.ACCEPTABLE_FORMATS
 
 
 def save_file(user_id: int, file_id: str, file) -> bool:
@@ -42,12 +39,9 @@ def save_file(user_id: int, file_id: str, file) -> bool:
      - возвращать путь до файла для хранения в базе
 
     :param user_id: id чата бота с пользователем в ТГ
-
     :param file_id: строка с названием файла
-
     :param file: Набор байт, полученный в результате скачивания файла
     c помощью 'telebot.Telebot.download_file()'
-
     :return: True в случае успеха, False во всех остальных
     """
     if check_format(file_id):

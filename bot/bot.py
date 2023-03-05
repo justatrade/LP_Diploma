@@ -5,7 +5,12 @@ from telebot import TeleBot
 
 def main():
     bot = TeleBot(config.BOT_TOKEN)
-    h.all_handlers(bot)
+    bot.register_message_handler(h.get_photo,
+                                 content_types=['photo', 'document'],
+                                 pass_bot=True)
+    bot.register_message_handler(h.greeting,
+                                 commands=['start', 'help'],
+                                 pass_bot=True)
     try:
         bot.infinity_polling()
     except KeyboardInterrupt:
