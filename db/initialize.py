@@ -56,7 +56,8 @@ def fill_db_space_images():
                     ])
                     cursor.execute(
                         f'INSERT INTO files (user_id, full_path) '
-                        f'VALUES(1, "{full_path}")'
+                        f'VALUES(1, "?")',
+                        full_path
                     )
             db.commit()
     except sqlite3.Error as e:
