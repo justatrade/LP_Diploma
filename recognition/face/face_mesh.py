@@ -1,7 +1,4 @@
-import cv2
-import mediapipe as mp
-import os
-from w import *
+from image import *
 
 
 def mesh(face=True):
@@ -27,4 +24,5 @@ def mesh(face=True):
         cv2.waitKey(0)
 
 
-mesh()
+if "__name__" == "__main__":
+    mesh()
