@@ -3,14 +3,14 @@ import mediapipe as mp
 
 
 def image():
-    img = cv2.imread("recognition/face/fake1.jpg")
+    img = cv2.imread()
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     height, width, _ = img.shape
     return img, img_rgb, height, width
 
 
 def background():
-    background_img = cv2.imread("recognition/face/kosm.png")
+    background_img = cv2.imread()
     resized_bg_img = cv2.resize(background_img, (image()[1].shape[1], image()[0].shape[0]))
     return resized_bg_img
 
