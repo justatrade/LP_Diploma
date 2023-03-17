@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy
 
 
-def get_stars(user_choice='Dwarf') -> dict:
+def get_stars(user_choice='DwarfWLM') -> dict:
     """
     Основная управляющая функция распознавания.
     :param user_choice: Выбор фонового изображения пользователем.
@@ -65,27 +65,22 @@ def _get_contour_center(contours: list) -> (list, list, list):
     Функция для получения списка центров всех контуров, а так же списка контуров с повторяющимися
     вершинами, и контуров, момент которых равен 0.
     :param contours: Список контуров для обработки типа NDArray.
-    :return: Список центров, список повторяющихся контуров, список контуров с нулевым моментом.
+    :return: Список центров, список ассиметричных контуров (число вершин не совпадает с длиной
+    контура), список контуров с нулевым моментом.
     """
     list_of_centers = []
-    new_contours = []
+    asymmetric_contours = []
     except_contours = []
-    not_equal_len_counter = 0
-    except_counter = 0
-    minimum_contour = 0
     for cnt in contours:
         moments = cv2.moments(cnt)
         unique_points = [list(x) for x in set(tuple(x[0]) for x in cnt)]
-        if len(cnt) == config.MIN_CONTOUR_SIZE:
-            minimum_contour += 1
         if len(unique_points) != len(cnt):
             # print('BEGIN: Unique points != cnt')
             # print((len(unique_points), len(cnt)))
             # pprint.pprint(cnt)
             # pprint.pprint(moments)
             # print('END: Unique points != cnt')
-            new_contours.append(cnt)
-            not_equal_len_counter += 1
+            asymmetric_contours.append(cnt)
         if moments['m00'] != 0:
             cx = int(moments['m10']/moments['m00'])
             cy = int(moments['m01']/moments['m00'])
@@ -99,9 +94,7 @@ def _get_contour_center(contours: list) -> (list, list, list):
             # print((len(unique_points), len(cnt)))
             # print('END: Exception')
             except_contours.append(cnt)
-            except_counter += 1
-    # print((not_equal_len_counter, except_counter, minimum_contour, len(contours)))
-    return list_of_centers, new_contours, except_contours
+    return list_of_centers, asymmetric_contours, except_contours
 
 
 if __name__ == '__main__':

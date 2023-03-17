@@ -15,7 +15,7 @@ DB_NAME = 'db/space-face.db'
 
 # Space Recognition
 MIN_CONTOUR_SIZE = 0
-USER_CHOICE_MAPPING = {'Dwarf': sm.DwarfWLM(), 'CRICN': sm.CRICN(),
+USER_CHOICE_MAPPING = {'DwarfWLM': sm.DwarfWLM(), 'CRICN': sm.CRICN(),
                        'NGC346': sm.NGC346(), 'Pandora': sm.Pandora(),
                        'Pillars': sm.Pillars(), 'Tarantula': sm.Tarantula()}
 SPACE_DEBUG_MODE = False
