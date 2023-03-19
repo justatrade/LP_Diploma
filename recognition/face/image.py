@@ -1,17 +1,19 @@
 import cv2
 import mediapipe as mp
+from files.save_get_file import get_file_by_user
 
 
-def image():
-    img = cv2.imread()
+def image_params(*args):
+    img = cv2.imread(get_file_by_user(1, 1))
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     height, width, _ = img.shape
     return img, img_rgb, height, width
 
 
 def background():
-    background_img = cv2.imread()
-    resized_bg_img = cv2.resize(background_img, (image()[1].shape[1], image()[0].shape[0]))
+    img = image_params()
+    background_img = cv2.imread(get_file_by_user(1, 2))
+    resized_bg_img = cv2.resize(background_img, (img[1].shape[1], img[0].shape[0]))
     return resized_bg_img
 
 

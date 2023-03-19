@@ -2,7 +2,7 @@ from image import *
 
 
 def mesh(face=True):
-    img = image()
+    img = image_params()
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing_styles = mp.solutions.drawing_styles
     result = mp_mesh()[1].process(img[1])
@@ -24,5 +24,5 @@ def mesh(face=True):
         cv2.waitKey(0)
 
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     mesh()
