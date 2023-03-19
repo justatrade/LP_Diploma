@@ -1,6 +1,6 @@
 from decouple import config
-import recognition.space.space_models as sm
 import os
+import recognition.space.space_models as sm
 
 # Bot
 BOT_TOKEN = config('BOT_TOKEN')
@@ -18,4 +18,4 @@ MIN_CONTOUR_SIZE = 0
 USER_CHOICE_MAPPING = {'DwarfWLM': sm.DwarfWLM(), 'CRICN': sm.CRICN(),
                        'NGC346': sm.NGC346(), 'Pandora': sm.Pandora(),
                        'Pillars': sm.Pillars(), 'Tarantula': sm.Tarantula()}
-SPACE_DEBUG_MODE = False
+SPACE_DEBUG_MODE = True

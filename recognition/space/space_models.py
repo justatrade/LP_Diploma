@@ -2,6 +2,7 @@ import config
 import cv2
 from numpy.typing import NDArray
 import os
+from typing import TypeVar
 
 
 class SpaceImage:
@@ -40,7 +41,7 @@ class SpaceImage:
         Получение исходного изображения.
         :return: Массив NDArray исходного изображения.
         """
-        return self._get_original_image(self._file_name)
+        return self._get_original_image()
 
     def contours(self) -> list:
         """
@@ -50,18 +51,17 @@ class SpaceImage:
         return self._get_contours(self._img)
 
     # noinspection PyMethodMayBeStatic
-    def _get_original_image(self, file_name: str) -> NDArray:
+    def _get_original_image(self) -> NDArray:
         # TODO: Добавить обработку исключений здесь и во всех вызовах класса.
         #       Использовать полный путь к файлу или os.path.split() в месте вызова
         """
         Получаем оригинальное, не изменённое изображение по имени файла.
-        :param file_name: Имя файла.
         :return: Массив, описывающий изображение
         :rtype: np.ndarray
         """
         img = cv2.imread(os.path.join(*[config.ROOT_DIR,
                                         config.SPACE_IMG_PATH,
-                                        file_name]))
+                                        self._file_name]))
         return img
 
     # noinspection PyMethodMayBeStatic
@@ -110,9 +110,9 @@ class DwarfWLM(SpaceImage):
         """
         super().__init__()
         self._file_name = 'DwarfGalaxyWLM.png'
-        self._original_img = super()._get_original_image(self._file_name)
-        self._img = super()._get_gray_image(self._original_img)
-        self._img = super()._get_threshold_image(self._img)
+        self._original_img = self._get_original_image()
+        self._img = self._get_threshold_image(
+            self._get_gray_image(self._original_img))
 
 
 class CRICN(SpaceImage):
@@ -125,9 +125,9 @@ class CRICN(SpaceImage):
         """
         super().__init__()
         self._file_name = 'CosmicRiffsInCarinaNebula.png'
-        self._original_img = super()._get_original_image(self._file_name)
-        self._img = super()._get_gray_image(self._original_img)
-        self._img = super()._get_threshold_image(self._img)
+        self._original_img = self._get_original_image()
+        self._img = self._get_threshold_image(
+            self._get_gray_image(self._original_img))
 
 
 class NGC346(SpaceImage):
@@ -140,9 +140,9 @@ class NGC346(SpaceImage):
         """
         super().__init__()
         self._file_name = 'NGC346.png'
-        self._original_img = super()._get_original_image(self._file_name)
-        self._img = super()._get_gray_image(self._original_img)
-        self._img = super()._get_threshold_image(self._img)
+        self._original_img = self._get_original_image()
+        self._img = self._get_threshold_image(
+            self._get_gray_image(self._original_img))
 
 
 class Pandora(SpaceImage):
@@ -155,9 +155,9 @@ class Pandora(SpaceImage):
         """
         super().__init__()
         self._file_name = 'PandoraCluster.png'
-        self._original_img = super()._get_original_image(self._file_name)
-        self._img = super()._get_gray_image(self._original_img)
-        self._img = super()._get_threshold_image(self._img)
+        self._original_img = self._get_original_image()
+        self._img = self._get_threshold_image(
+            self._get_gray_image(self._original_img))
 
 
 class Pillars(SpaceImage):
@@ -170,9 +170,9 @@ class Pillars(SpaceImage):
         """
         super().__init__()
         self._file_name = 'PillarsOfCreation.png'
-        self._original_img = super()._get_original_image(self._file_name)
-        self._img = super()._get_gray_image(self._original_img)
-        self._img = super()._get_threshold_image(self._img)
+        self._original_img = self._get_original_image()
+        self._img = self._get_threshold_image(
+            self._get_gray_image(self._original_img))
 
 
 class Tarantula(SpaceImage):
@@ -185,6 +185,10 @@ class Tarantula(SpaceImage):
         """
         super().__init__()
         self._file_name = 'TarantulaNebula.png'
-        self._original_img = super()._get_original_image(self._file_name)
-        self._img = super()._get_gray_image(self._original_img)
-        self._img = super()._get_threshold_image(self._img)
+        self._original_img = self._get_original_image()
+        self._img = self._get_threshold_image(
+            self._get_gray_image(self._original_img))
+
+
+SpaceImageInheritor = TypeVar('SpaceImageInheritor', bound=SpaceImage)
+

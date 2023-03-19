@@ -2,6 +2,19 @@ import config
 import cv2
 import matplotlib.pyplot as plt
 import numpy
+from space_models import SpaceImageInheritor
+
+
+def _validated_choice(user_choice: str) -> SpaceImageInheritor:
+    """
+    Проверка корректности выбора названия изображения
+    :param user_choice: Название изображения
+    :return: Класс, соответствующий маппингу. Тип: SpaceImage
+    """
+    if user_choice in config.USER_CHOICE_MAPPING:
+        return config.USER_CHOICE_MAPPING[user_choice]
+    else:
+        raise KeyError(f"Incorrect name of an image: {user_choice}")
 
 
 def get_stars(user_choice='DwarfWLM') -> dict:
@@ -10,10 +23,19 @@ def get_stars(user_choice='DwarfWLM') -> dict:
     :param user_choice: Выбор фонового изображения пользователем.
     :return: Словарь с описанием успеха функции, списком точек и размером исходного изображения
     """
-    base_space_img = config.USER_CHOICE_MAPPING[user_choice]
-    contours = base_space_img.contours()
-    centroids, new_contours, except_contours = _get_contour_center(contours)
-    current_image = base_space_img.image()
+    result_dict = {'success': False}
+    try:
+        base_space_img = _validated_choice(user_choice)
+        contours = base_space_img.contours()
+        centroids, new_contours, except_contours = _get_contour_center(contours)
+        current_image = base_space_img.image()
+    except KeyError as e:
+        print(e)
+        return result_dict
+
+    result_dict['success'] = True
+    result_dict['stars'] = centroids
+    result_dict['image_size'] = (current_image.shape[0], current_image.shape[1])
 
     if config.SPACE_DEBUG_MODE:
         cv2.drawContours(current_image, contours=contours, contourIdx=-1,
@@ -28,9 +50,7 @@ def get_stars(user_choice='DwarfWLM') -> dict:
         plt.imshow(plt_image)
         plt.show()
 
-    return {'success': True,
-            'stars': centroids,
-            'image_size': (current_image.shape[0], current_image.shape[1])}
+    return result_dict
 
 
 def _find_center_by_average_coordinates(contour: numpy.typing.NDArray) -> tuple:
@@ -48,14 +68,11 @@ def _find_center_by_average_coordinates(contour: numpy.typing.NDArray) -> tuple:
         current_y = each[0][1]
         if current_x < min_x:
             min_x = current_x
-            continue
-        if current_y < min_y:
+        elif current_y < min_y:
             min_y = current_y
-            continue
-        if current_x > max_x:
+        elif current_x > max_x:
             max_x = current_x
-            continue
-        if current_y > max_y:
+        elif current_y > max_y:
             max_y = current_y
     return int((min_y + max_y) / 2), int((min_x + max_x) / 2)
 
@@ -98,4 +115,4 @@ def _get_contour_center(contours: list) -> (list, list, list):
 
 
 if __name__ == '__main__':
-    get_stars()
+    print(get_stars('DwarfWLM'))
