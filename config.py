@@ -14,6 +14,7 @@ ACCEPTABLE_FORMATS = ['jpg', 'webp', 'png', 'jpeg', 'tif', 'tiff']
 DB_NAME = 'db/space-face.db'
 
 # Space Recognition
+FULL_RES_FLAG = False
 MIN_CONTOUR_SIZE = 0
 USER_CHOICE_MAPPING = {'DwarfWLM': SpaceImage('DwarfGalaxyWLM.png'),
                        'CRICN': SpaceImage('CosmicRiffsInCarinaNebula.png'),

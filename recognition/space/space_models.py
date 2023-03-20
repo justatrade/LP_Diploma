@@ -9,9 +9,9 @@ class SpaceImage:
     """
     Класс для получения распознанного изображения и массива точек
     """
-    def __init__(self, file_name, threshold_level=150, threshold_type=cv2.THRESH_BINARY):
-        # TODO: Реализовать возможность использования полноразмерных изображений на основании флага
-        #       из настроек
+    def __init__(self, file_name,
+                 threshold_level=150,
+                 threshold_type=cv2.THRESH_BINARY):
         """
         Конструктор класса для получения контуров звёзд на изображении звёздного неба.
         :param threshold_level: Уровень предельного значения пикселя для преобразования в ч/б.
@@ -21,7 +21,12 @@ class SpaceImage:
         self._threshold_type = threshold_type
         self._contours_mode = cv2.RETR_EXTERNAL
         self._contours_method = cv2.CHAIN_APPROX_NONE
-        self._file_name = file_name
+        if config.FULL_RES_FLAG:
+            self._file_name = os.path.splitext(file_name)[0] + \
+                              '_fullres' + \
+                              os.path.splitext(file_name)[1]
+        else:
+            self._file_name = file_name
         self._original_img = self._get_original_image()
         self._img = self._get_threshold_image(
             self._get_gray_image(self._original_img))
@@ -100,5 +105,6 @@ class SpaceImage:
             if len(each) > config.MIN_CONTOUR_SIZE:
                 contours_list.append(each)
         return contours_list
+
 
 SpaceImageInheritor = TypeVar('SpaceImageInheritor', bound=SpaceImage)
