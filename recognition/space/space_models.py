@@ -9,7 +9,7 @@ class SpaceImage:
     """
     Абстрактный класс-модель для получения распознанного изображения и массива точек
     """
-    def __init__(self, threshold_level=150, threshold_type=cv2.THRESH_BINARY):
+    def __init__(self, file_name, threshold_level=150, threshold_type=cv2.THRESH_BINARY):
         # TODO: Реализовать возможность использования полноразмерных изображений на основании флага
         #       из настроек
         """
@@ -21,8 +21,10 @@ class SpaceImage:
         self._threshold_type = threshold_type
         self._contours_mode = cv2.RETR_EXTERNAL
         self._contours_method = cv2.CHAIN_APPROX_NONE
-        self._file_name = ''
-        self._img = None
+        self._file_name = file_name
+        self._original_img = self._get_original_image()
+        self._img = self._get_threshold_image(
+            self._get_gray_image(self._original_img))
 
     def __setattr__(self, key, value):
         """
@@ -99,96 +101,4 @@ class SpaceImage:
                 contours_list.append(each)
         return contours_list
 
-
-class DwarfWLM(SpaceImage):
-    """
-    Класс модель для обработки снимка галактики Вульфа-Лундмарка-Мелотта.
-    """
-    def __init__(self):
-        """
-        Конструктор класса изображения галактики
-        """
-        super().__init__()
-        self._file_name = 'DwarfGalaxyWLM.png'
-        self._original_img = self._get_original_image()
-        self._img = self._get_threshold_image(
-            self._get_gray_image(self._original_img))
-
-
-class CRICN(SpaceImage):
-    """
-    Класс модель для обработки снимка Космические Рифы в галактике Карина Небула.
-    """
-    def __init__(self):
-        """
-        Конструктор класса изображения галактики
-        """
-        super().__init__()
-        self._file_name = 'CosmicRiffsInCarinaNebula.png'
-        self._original_img = self._get_original_image()
-        self._img = self._get_threshold_image(
-            self._get_gray_image(self._original_img))
-
-
-class NGC346(SpaceImage):
-    """
-    Класс модель для обработки снимка галактики NGC346.
-    """
-    def __init__(self):
-        """
-        Конструктор класса изображения галактики
-        """
-        super().__init__()
-        self._file_name = 'NGC346.png'
-        self._original_img = self._get_original_image()
-        self._img = self._get_threshold_image(
-            self._get_gray_image(self._original_img))
-
-
-class Pandora(SpaceImage):
-    """
-    Класс модель для обработки снимка звёздного скопления Пандора.
-    """
-    def __init__(self):
-        """
-        Конструктор класса изображения галактики
-        """
-        super().__init__()
-        self._file_name = 'PandoraCluster.png'
-        self._original_img = self._get_original_image()
-        self._img = self._get_threshold_image(
-            self._get_gray_image(self._original_img))
-
-
-class Pillars(SpaceImage):
-    """
-    Класс модель для обработки снимка скоплений межзвёздного газа "Столпы Творения".
-    """
-    def __init__(self):
-        """
-        Конструктор класса изображения галактики
-        """
-        super().__init__()
-        self._file_name = 'PillarsOfCreation.png'
-        self._original_img = self._get_original_image()
-        self._img = self._get_threshold_image(
-            self._get_gray_image(self._original_img))
-
-
-class Tarantula(SpaceImage):
-    """
-    Класс модель для обработки снимка галактики Тарантула Небула.
-    """
-    def __init__(self):
-        """
-        Конструктор класса изображения галактики
-        """
-        super().__init__()
-        self._file_name = 'TarantulaNebula.png'
-        self._original_img = self._get_original_image()
-        self._img = self._get_threshold_image(
-            self._get_gray_image(self._original_img))
-
-
 SpaceImageInheritor = TypeVar('SpaceImageInheritor', bound=SpaceImage)
-

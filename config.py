@@ -1,6 +1,6 @@
 from decouple import config
 import os
-import recognition.space.space_models as sm
+from recognition.space.space_models import SpaceImage
 
 # Bot
 BOT_TOKEN = config('BOT_TOKEN')
@@ -15,7 +15,10 @@ DB_NAME = 'db/space-face.db'
 
 # Space Recognition
 MIN_CONTOUR_SIZE = 0
-USER_CHOICE_MAPPING = {'DwarfWLM': sm.DwarfWLM(), 'CRICN': sm.CRICN(),
-                       'NGC346': sm.NGC346(), 'Pandora': sm.Pandora(),
-                       'Pillars': sm.Pillars(), 'Tarantula': sm.Tarantula()}
+USER_CHOICE_MAPPING = {'DwarfWLM': SpaceImage('DwarfGalaxyWLM.png'),
+                       'CRICN': SpaceImage('CosmicRiffsInCarinaNebula.png'),
+                       'NGC346': SpaceImage('NGC346.png'),
+                       'Pandora': SpaceImage('PandoraCluster.png'),
+                       'Pillars': SpaceImage('PillarsOfCreation.png'),
+                       'Tarantula': SpaceImage('TarantulaNebula.png')}
 SPACE_DEBUG_MODE = True
