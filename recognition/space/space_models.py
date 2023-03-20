@@ -7,7 +7,7 @@ from typing import TypeVar
 
 class SpaceImage:
     """
-    Абстрактный класс-модель для получения распознанного изображения и массива точек
+    Класс для получения распознанного изображения и массива точек
     """
     def __init__(self, file_name, threshold_level=150, threshold_type=cv2.THRESH_BINARY):
         # TODO: Реализовать возможность использования полноразмерных изображений на основании флага
@@ -26,17 +26,17 @@ class SpaceImage:
         self._img = self._get_threshold_image(
             self._get_gray_image(self._original_img))
 
-    def __setattr__(self, key, value):
-        """
-        Ограничение изменений атрибутов класса откуда-либо, кроме как из дочернего класса.
-        :param key: Ключ.
-        :param value: Значение.
-        :return: Возвращает None при нарушении условия обращения, иначе устанавливает атрибут класса
-        """
-        if not issubclass(type(self), SpaceImage):
-            return None
-        else:
-            self.__dict__[key] = value
+    # def __setattr__(self, key, value):
+    #     """
+    #     Ограничение изменений атрибутов класса откуда-либо, кроме как из дочернего класса.
+    #     :param key: Ключ.
+    #     :param value: Значение.
+    #     :return: Возвращает None при нарушении условия обращения, иначе устанавливает атрибут класса
+    #     """
+    #     if not issubclass(type(self), SpaceImage):
+    #         return None
+    #     else:
+    #         self.__dict__[key] = value
 
     def image(self) -> NDArray:
         """
