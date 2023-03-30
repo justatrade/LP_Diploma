@@ -1,8 +1,14 @@
 from image import *
+from LP_Diploma.files.save_get_file import get_file_by_user
 
 
 def mesh(face=True):
-    img = image_params()
+    """
+
+    :param face: Флаг который нужно будет убрать
+    :return: Отрисовывает координаты точек на лице
+    """
+    img = image_params(get_file_by_user(1, 1))
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing_styles = mp.solutions.drawing_styles
     result = mp_mesh()[1].process(img[1])

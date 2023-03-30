@@ -1,20 +1,16 @@
 import cv2
 import mediapipe as mp
-from files.save_get_file import get_file_by_user
 
 
-def image_params(*args):
-    img = cv2.imread(get_file_by_user(1, 1))
+def image_params(img):
+    """
+    :param img: str
+    :return: img - class 'numpy.ndarray', img_rgb - class 'numpy.ndarray', height - int, width - int
+    """
+    img = cv2.imread(img)
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     height, width, _ = img.shape
     return img, img_rgb, height, width
-
-
-def background():
-    img = image_params()
-    background_img = cv2.imread(get_file_by_user(1, 2))
-    resized_bg_img = cv2.resize(background_img, (img[1].shape[1], img[0].shape[0]))
-    return resized_bg_img
 
 
 def mp_mesh():
