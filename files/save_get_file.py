@@ -10,7 +10,13 @@ def get_file_by_user(user_id, file_id):
     :return:
     """
     try:
-        with open(f'{config.ROOT_DIR}/users/{user_id}/{file_id}', 'rb') as f:
+        with open(
+                os.path.join(*[
+                    config.ROOT_DIR,
+                    'users',
+                    user_id,
+                    file_id]),
+                'rb') as f:
             file = f.read()
     except (FileNotFoundError, IOError) as e:
         print(e)
@@ -21,14 +27,11 @@ def get_file_by_user(user_id, file_id):
 def check_format(file_id) -> bool:
     """
     Функция для проверки формата входящего файла.
-    :param file_id: Название файла, расширение которого будет проверяться
-    :return: True, если расширение допустимо. False во всех остальных случаях
+    :param file_id: Название файла, расширение которого будет проверяться.
+    :return: True, если расширение допустимо. False во всех остальных случаях.
     """
     extension = os.path.splitext(file_id)[-1][1::]
-    if extension in config.ACCEPTABLE_FORMATS:
-        return True
-    else:
-        return False
+    return extension in config.ACCEPTABLE_FORMATS
 
 
 def save_file(user_id: int, file_id: str, file) -> bool:
@@ -41,24 +44,21 @@ def save_file(user_id: int, file_id: str, file) -> bool:
      - проверку на количество использованного дискового пространства пользователем
      - возвращать путь до файла для хранения в базе
 
-    :param user_id: id чата бота с пользователем в ТГ
-
-    :param file_id: строка с названием файла
-
+    :param user_id: id чата бота с пользователем в ТГ.
+    :param file_id: строка с названием файла.
     :param file: Набор байт, полученный в результате скачивания файла
     c помощью 'telebot.Telebot.download_file()'
-
     :return: True в случае успеха, False во всех остальных
     """
     if check_format(file_id):
+        saving_path = os.path.join(*[config.ROOT_DIR, 'users', str(user_id)])
         try:
-            os.makedirs(f'{config.ROOT_DIR}/users/{user_id}', exist_ok=True)
-            with open(os.path.join(
-                    f'{config.ROOT_DIR}/users/{user_id}',
+            os.makedirs(saving_path, exist_ok=True)
+            with open(
                     # Так как в file_id приходит путь от Телеграмм, который содержит директорию,
                     # мы отбрасываем его и берём только название файла
-                    os.path.split(file_id)[-1]
-            ), 'wb') as f:
+                    os.path.join(saving_path, os.path.split(file_id)[-1]),
+                    'wb') as f:
                 f.write(file)
                 return True
         except (IOError, FileNotFoundError) as e:
@@ -69,4 +69,4 @@ def save_file(user_id: int, file_id: str, file) -> bool:
 
 
 if __name__ == '__main__':
-    save_file(0, '', '')
+    pass

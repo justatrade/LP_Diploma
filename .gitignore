@@ -129,3 +129,13 @@ dmypy.json
 .pyre/
 recognition/face/term.jpeg
 /recognition/face/ignore/
+
+# Eugene Myasnikov's part of .gitignore
+/.idea/
+/LP_Diploma.iml
+/test_img/
+/venv/
+/.env
+/users/
+/db/space-face.db
+/main.py
