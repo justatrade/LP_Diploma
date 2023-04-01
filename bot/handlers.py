@@ -42,4 +42,3 @@ def get_photo(msg, bot):
         print(e)
         bot.send_message(msg.chat.id, "Photo downloading failed. "
                                       "Please, try again")
-

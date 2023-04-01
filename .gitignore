@@ -127,6 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+recognition/face/term.jpeg
+/recognition/face/ignore/
 
 # Eugene Myasnikov's part of .gitignore
 /.idea/
