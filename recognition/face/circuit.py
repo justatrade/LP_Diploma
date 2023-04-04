@@ -1,5 +1,4 @@
 from files.save_get_file import get_file_by_user
-import numpy as np
 from numpy.typing import NDArray
 from treatment import get_mask
 from image import *
@@ -31,8 +30,7 @@ def draw_contours(img: tuple) -> NDArray:
     cv2.drawContours(image=img_rgb[0], contours=longest_contur, contourIdx=-1, color=(0, 0, 255),
                      thickness=2,
                      lineType=cv2.LINE_AA)
-    coordinates = np.save("Координаты", longest_contur)
-    return coordinates
+    return longest_contur
 
 
 if __name__ == "__main__":
