@@ -1,4 +1,4 @@
-from LP_Diploma.files.save_get_file import get_file_by_user
+from files.save_get_file import get_file_by_user
 from numpy.typing import NDArray
 from treatment import get_mask
 from image import *
@@ -30,8 +30,7 @@ def draw_contours(img: tuple) -> NDArray:
     cv2.drawContours(image=img_rgb[0], contours=longest_contur, contourIdx=-1, color=(0, 0, 255),
                      thickness=2,
                      lineType=cv2.LINE_AA)
-    cv2.imshow("res", img_rgb[0])
-    cv2.waitKey(0)
+    return longest_contur
 
 
 if __name__ == "__main__":
