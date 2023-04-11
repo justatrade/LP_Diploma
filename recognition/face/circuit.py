@@ -1,7 +1,6 @@
-from files.save_get_file import get_file_by_user
 from numpy.typing import NDArray
 from treatment import get_mask
-from image import *
+from recognition.face.image import *
 
 
 def get_longest_contur(contours: tuple) -> int:
@@ -14,6 +13,8 @@ def get_longest_contur(contours: tuple) -> int:
     for each in contours:
         if len(each) > len(longest):
             longest = each
+    if config.SPACE_DEBUG_MODE:
+        pprint.pprint(longest)
     return longest
 
 
@@ -27,11 +28,16 @@ def draw_contours(img: tuple) -> NDArray:
     img = get_mask(img_rgb)
     contours, _ = cv2.findContours(image=img, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_NONE)
     longest_contur = get_longest_contur(contours)
-    cv2.drawContours(image=img_rgb[0], contours=longest_contur, contourIdx=-1, color=(0, 0, 255),
-                     thickness=2,
-                     lineType=cv2.LINE_AA)
-    return longest_contur
+    n = 0
+    for i in range(len(longest_contur[::100])):
+        n += 1
+        cv2.drawContours(image=img_rgb[0], contours=longest_contur[:n*100:], contourIdx=-1, color=(0, 0, 255),
+                         thickness=2,
+                         lineType=cv2.LINE_AA)
+        gif_frame = cv2.imwrite(f"image_gif/Контур_{n}.jpg", img_rgb[0])
 
+    if config.SPACE_DEBUG_MODE:
+        pprint.pprint(gif_frame)
+        pprint.pprint(longest_contur)
+    return gif_frame, longest_contur
 
-if __name__ == "__main__":
-    draw_contours(image_params(get_file_by_user(1, 1)))

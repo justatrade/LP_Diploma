@@ -1,5 +1,5 @@
 from image import *
-from LP_Diploma.files.save_get_file import get_file_by_user
+from files.save_get_file import get_file_by_user
 
 
 def mesh(face=True):
