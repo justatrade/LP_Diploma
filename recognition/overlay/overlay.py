@@ -67,15 +67,11 @@ def create_weighted_matrix(star_matrix: NDArray) -> NDArray:
         """
         for each in config.FIRST_CIRCLE:
             cur_point = (coordinates[0] + each[0], coordinates[1] + each[1])
-            if star_matrix[cur_point] > 0:
-                continue
-            else:
+            if star_matrix[cur_point] == 0:
                 star_matrix[cur_point] = config.FIRST_CIRCLE_VALUE
         for each in config.SECOND_CIRCLE:
             cur_point = (coordinates[0] + each[0], coordinates[1] + each[1])
-            if star_matrix[cur_point] > 0:
-                continue
-            else:
+            if star_matrix[cur_point] == 0:
                 star_matrix[cur_point] = config.SECOND_CIRCLE_VALUE
 
     for every in list(zip(*np.where(star_matrix == config.DEFAULT_MATRIX_VALUE))):
