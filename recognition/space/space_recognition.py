@@ -2,7 +2,8 @@ import config
 import cv2
 import matplotlib.pyplot as plt
 import numpy
-from space_models import SpaceImageInheritor
+from numpy.typing import NDArray
+from recognition.space.space_models import SpaceImageInheritor
 
 
 def _validated_choice(user_choice: str) -> SpaceImageInheritor:
@@ -38,19 +39,24 @@ def get_stars(user_choice='DwarfWLM') -> dict:
     result_dict['image_size'] = (current_image.shape[0], current_image.shape[1])
 
     if config.SPACE_DEBUG_MODE:
-        cv2.drawContours(current_image, contours=contours, contourIdx=-1,
-                         color=(0, 255, 0), thickness=1, lineType=cv2.LINE_AA)
-        cv2.drawContours(current_image, contours=new_contours, contourIdx=-1,
-                         color=(0, 0, 255), thickness=1, lineType=cv2.LINE_AA)
-        cv2.drawContours(current_image, contours=except_contours, contourIdx=-1,
-                         color=(0, 255, 255), thickness=1, lineType=cv2.LINE_AA)
-        for each in centroids:
-            current_image[each] = [0, 0, 255]
-        plt_image = cv2.cvtColor(current_image, cv2.COLOR_BGR2RGB)
-        plt.imshow(plt_image)
-        plt.show()
-
+        _draw_stars(current_image, contours,
+                    centroids, new_contours, except_contours)
     return result_dict
+
+
+def _draw_stars(current_image: NDArray, contours: list,
+                centroids: list, new_contours: list, except_contours: list):
+    cv2.drawContours(current_image, contours=contours, contourIdx=-1,
+                     color=(0, 255, 0), thickness=1, lineType=cv2.LINE_AA)
+    cv2.drawContours(current_image, contours=new_contours, contourIdx=-1,
+                     color=(0, 0, 255), thickness=1, lineType=cv2.LINE_AA)
+    cv2.drawContours(current_image, contours=except_contours, contourIdx=-1,
+                     color=(0, 255, 255), thickness=1, lineType=cv2.LINE_AA)
+    for each in centroids:
+        current_image[each] = [0, 0, 255]
+    plt_image = cv2.cvtColor(current_image, cv2.COLOR_BGR2RGB)
+    plt.imshow(plt_image)
+    plt.show()
 
 
 def _find_center_by_average_coordinates(contour: numpy.typing.NDArray) -> tuple:
@@ -115,4 +121,4 @@ def _get_contour_center(contours: list) -> (list, list, list):
 
 
 if __name__ == '__main__':
-    print(get_stars('DwarfWLM'))
+    print(len(get_stars('DwarfWLM')['stars']))
